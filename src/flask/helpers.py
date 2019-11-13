@@ -371,10 +371,32 @@ def url_for(endpoint, **values):
 
     if anchor is not None:
         rv += "#" + url_quote(anchor)
-    if rv[0] == '/':
-        rv = rv[1:]
     print("rv")
     print(rv)
+    original_uri = request.environ['HTTP_X_ORIGINAL_URI']
+    print("original_uri")
+    print(original_uri)
+    print(original_uri.count("/"))
+    if rv == "/" and "logout" not in original_uri:
+        pass
+        rv = original_uri
+    elif "logout" in original_uri:
+        index = original_uri.find("/",2)
+        rv = original_uri[:index] + rv
+    elif original_uri.count("/") >= 2:
+        if rv not in original_uri:
+            index = original_uri.find("/",2)
+            rv = original_uri[:index] + rv
+    elif rv not in original_uri:
+        rv = original_uri[:len(original_uri)-1] + rv
+    elif rv.startswith(original_uri) is False:
+        pass
+        # rv = original_uri[:len(original_uri)-1]+rv
+        #if rv[0] == '/':
+        #    rv = rv[1:]
+    print("rv")
+    print(rv)
+    print("end")
     return rv
 
 
