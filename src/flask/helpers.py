@@ -373,6 +373,8 @@ def url_for(endpoint, **values):
         rv += "#" + url_quote(anchor)
     if rv[0] == '/':
         rv = rv[1:]
+    print("rv")
+    print(rv)
     return rv
 
 
