@@ -371,6 +371,8 @@ def url_for(endpoint, **values):
 
     if anchor is not None:
         rv += "#" + url_quote(anchor)
+    if rv[0] == '/':
+        rv = rv[1:]
     return rv
 
 
